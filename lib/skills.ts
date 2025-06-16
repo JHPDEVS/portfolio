@@ -39,6 +39,12 @@ export const skills: Skill[] = [
     category: "Frontend",
   },
   {
+    name: "Vite.js",
+    badgeUrl:
+      "https://img.shields.io/badge/Vite.js-4FC08D?style=for-the-badge&logo=vite&logoColor=white",
+    category: "Frontend",
+  },
+  {
     name: "TypeScript",
     badgeUrl:
       "https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white",

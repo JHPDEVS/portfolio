@@ -1,5 +1,5 @@
 import { Code, Database, Gamepad2, Smartphone } from "lucide-react";
-import type { ProjectType } from "./projects";
+import type { ProjectType, Project } from "./projects";
 
 // プロジェクトタイプアイコン取得
 export function getProjectTypeIcon(type: ProjectType) {
@@ -47,4 +47,23 @@ export function getProjectTypeName(type: ProjectType) {
     default:
       return "その他";
   }
+}
+
+export function getProjectTypeIcons(project: Project) {
+  const types = Array.isArray(project.type) ? project.type : [project.type];
+  return types.map((type) => getProjectTypeIcon(type));
+}
+
+export function getProjectTypeNames(project: Project) {
+  const types = Array.isArray(project.type) ? project.type : [project.type];
+  return types.map((type) => getProjectTypeName(type));
+}
+
+export function getProjectTypeColors(project: Project) {
+  const types = Array.isArray(project.type) ? project.type : [project.type];
+  return types.map((type) => getProjectTypeColor(type));
+}
+
+export function getPrimaryProjectType(project: Project): ProjectType {
+  return Array.isArray(project.type) ? project.type[0] : project.type;
 }

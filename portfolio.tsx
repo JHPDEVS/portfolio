@@ -153,7 +153,11 @@ export default function Portfolio() {
               です
             </h1>
             <p className="mx-auto max-w-[700px] p-6 text-muted-foreground text-base md:text-xl px-4">
-              ユーザーエクスペリエンスを重視するフロントエンド開発者です。ゲームからWebアプリケーション、モバイルアプリまで様々なプロジェクトを開発し、新しい技術に挑戦しています。
+              UXを重視するフロントエンド開発者です。
+              <br />
+              ゲームからWebアプリケーション、モバイルアプリまで
+              <br />
+              様々なプロジェクトを開発し、新しい技術に挑戦しています。
             </p>
           </motion.div>
           <motion.div
@@ -212,7 +216,7 @@ export default function Portfolio() {
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold">開発者として</h3>
                 <p className="text-muted-foreground text-base leading-relaxed">
-                  ユーザーエクスペリエンスを重視するフロントエンド開発者です。ゲームからWebアプリケーション、モバイルアプリまで、さまざまなプロジェクトを手掛け、新しい技術に挑戦しています。直感的に操作できるインターフェースを提供することに情熱を注ぎ、デザインと機能性の両立を常に目指しています。また、フロントエンドだけでなく、クライアントプロジェクトにおいてバックエンドの経験も積みながら、将来的にはフルスタック開発者として成長していくことを目指しています。
+                  UXを重視するフロントエンド開発者です。ゲームからWebアプリケーション、モバイルアプリまで、さまざまなプロジェクトを手掛け、新しい技術に挑戦しています。直感的に操作できるインターフェースを提供することに情熱を注ぎ、デザインと機能性の両立を常に目指しています。また、フロントエンドだけでなく、クライアントプロジェクトにおいてバックエンドの経験も積みながら、将来的にはフルスタック開発者として成長していくことを目指しています。
                 </p>
               </div>
 
@@ -294,6 +298,7 @@ export default function Portfolio() {
                     <CardHeader className="pb-4">
                       <CardTitle className="text-xl md:text-2xl flex items-center gap-3">
                         <span className="text-2xl">
+                          {category === "Language" && "📜"}
                           {category === "Frontend" && "🎨"}
                           {category === "Backend" && "⚙️"}
                           {category === "Cloud" && "☁️"}
@@ -301,11 +306,12 @@ export default function Portfolio() {
                           {category === "Mobile" && "📱"}
                           {category === "Tools" && "🛠️"}
                           {category === "Game" && "🎮"}
-                          {category === "OS" && "🌍"}
+                          {category === "OS" && "💻"}
                           {category === "CMS" && "📝"}
-                          {category === "ETC" && "🎭"}
+                          {category === "ETC" && "🔧"}
                         </span>
                         {category === "Frontend" && "フロントエンド"}
+                        {category === "Language" && "言語"}
                         {category === "Backend" && "バックエンド"}
                         {category === "Cloud" && "インフラ"}
                         {category === "Database" && "データベース"}

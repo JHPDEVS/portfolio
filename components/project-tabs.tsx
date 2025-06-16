@@ -14,7 +14,12 @@ import {
 import { Calendar, ExternalLink, Github, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { projects, type ProjectType } from "../lib/projects";
+import {
+  projects,
+  type ProjectType,
+  getProjectsByType,
+  getProjectTypes,
+} from "../lib/projects";
 import {
   getProjectTypeIcon,
   getProjectTypeColor,
@@ -45,9 +50,7 @@ export function ProjectTabs() {
 
   // フィルタリングされたプロジェクト
   const filteredProjects =
-    activeTab === "all"
-      ? projects
-      : projects.filter((project) => project.type === activeTab);
+    activeTab === "all" ? projects : getProjectsByType(activeTab);
 
   return (
     <div className="space-y-8">
@@ -70,7 +73,7 @@ export function ProjectTabs() {
               <Badge variant="secondary" className="ml-2 text-xs">
                 {tab.type === "all"
                   ? projects.length
-                  : projects.filter((p) => p.type === tab.type).length}
+                  : getProjectsByType(tab.type).length}
               </Badge>
             </Button>
           </motion.div>
@@ -87,91 +90,98 @@ export function ProjectTabs() {
           variants={staggerContainer}
           className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {filteredProjects.map((project, index) => (
-            <motion.div key={project.id} variants={fadeInUp} {...cardHover}>
-              <Card className="overflow-hidden h-full">
-                <div className="aspect-video relative">
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <Badge
-                      className={`${getProjectTypeColor(
-                        project.type
-                      )} flex items-center gap-1`}
-                    >
-                      {getProjectTypeIcon(project.type)}
-                      {getProjectTypeName(project.type)}
-                    </Badge>
-                  </div>
-                </div>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg leading-tight">
-                    {project.title}
-                  </CardTitle>
-                  <CardDescription className="text-sm line-clamp-2 h-12">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Calendar className="h-4 w-4 mr-2 flex-shrink-0" />
-                    <span className="truncate">{project.period}</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1">
-                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                      <Badge
-                        key={techIndex}
-                        variant="secondary"
-                        className="text-xs"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <Badge variant="secondary" className="text-xs">
-                        +{project.technologies.length - 3}
-                      </Badge>
-                    )}
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <motion.div {...scaleOnHover} className="flex-1">
-                      <Button size="sm" className="w-full" asChild>
-                        <Link href={`/project/${project.id}`}>詳細を見る</Link>
-                      </Button>
-                    </motion.div>
-                    <div className="flex gap-2">
-                      {project.github && (
-                        <motion.div {...scaleOnHover}>
-                          <Button size="sm" variant="outline" asChild>
-                            <Link href={project.github} target="_blank">
-                              <Github className="h-4 w-4" />
-                            </Link>
-                          </Button>
-                        </motion.div>
-                      )}
-                      {project.demo && (
-                        <motion.div {...scaleOnHover}>
-                          <Button size="sm" variant="outline" asChild>
-                            <Link href={project.demo} target="_blank">
-                              {project.type == "game" ? (
-                                <Play className="h-4 w-4" />
-                              ) : (
-                                <ExternalLink className="h-4 w-4" />
-                              )}
-                            </Link>
-                          </Button>
-                        </motion.div>
-                      )}
+          {filteredProjects.map((project, index) => {
+            const projectTypesList = getProjectTypes(project);
+            return (
+              <motion.div key={project.id} variants={fadeInUp} {...cardHover}>
+                <Card className="overflow-hidden h-full">
+                  <div className="aspect-video relative">
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute top-3 left-3 flex flex-wrap gap-1">
+                      {projectTypesList.map((type, typeIndex) => (
+                        <Badge
+                          key={typeIndex}
+                          className={`${getProjectTypeColor(
+                            type
+                          )} flex items-center gap-1 text-xs`}
+                        >
+                          {getProjectTypeIcon(type)}
+                          {getProjectTypeName(type)}
+                        </Badge>
+                      ))}
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg leading-tight">
+                      {project.title}
+                    </CardTitle>
+                    <CardDescription className="text-sm line-clamp-2 h-12">
+                      {project.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <Calendar className="h-4 w-4 mr-2 flex-shrink-0" />
+                      <span className="truncate">{project.period}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {project.technologies
+                        .slice(0, 3)
+                        .map((tech, techIndex) => (
+                          <Badge
+                            key={techIndex}
+                            variant="secondary"
+                            className="text-xs"
+                          >
+                            {tech}
+                          </Badge>
+                        ))}
+                      {project.technologies.length > 3 && (
+                        <Badge variant="secondary" className="text-xs">
+                          +{project.technologies.length - 3}
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <motion.div {...scaleOnHover} className="flex-1">
+                        <Button size="sm" className="w-full" asChild>
+                          <Link href={`/project/${project.id}`}>
+                            詳細を見る
+                          </Link>
+                        </Button>
+                      </motion.div>
+                      <div className="flex gap-2">
+                        {project.github && (
+                          <motion.div {...scaleOnHover}>
+                            <Button size="sm" variant="outline" asChild>
+                              <Link href={project.github} target="_blank">
+                                <Github className="h-4 w-4" />
+                              </Link>
+                            </Button>
+                          </motion.div>
+                        )}
+
+                        {project.demo && (
+                          <motion.div {...scaleOnHover}>
+                            <Button size="sm" variant="outline" asChild>
+                              <Link href={project.demo} target="_blank">
+                                <ExternalLink className="h-4 w-4" />
+                              </Link>
+                            </Button>
+                          </motion.div>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </AnimatePresence>
 
