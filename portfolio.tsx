@@ -299,6 +299,7 @@ export default function Portfolio() {
                           {category === "Mobile" && "📱"}
                           {category === "Tools" && "🛠️"}
                           {category === "Game" && "🎮"}
+                          {category === "OS" && "🌍"}
                           {category === "CMS" && "📝"}
                           {category === "ETC" && "🎭"}
                         </span>
@@ -309,6 +310,7 @@ export default function Portfolio() {
                         {category === "Mobile" && "モバイル"}
                         {category === "Tools" && "ツール"}
                         {category === "Game" && "ゲーム"}
+                        {category === "OS" && "OS"}
                         {category === "CMS" && "CMS"}
                         {category === "ETC" && "その他"}
                       </CardTitle>

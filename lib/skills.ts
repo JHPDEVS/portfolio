@@ -60,7 +60,48 @@ export const skills: Skill[] = [
       "https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=white",
     category: "Frontend",
   },
-
+  {
+    name: "MUI",
+    badgeUrl:
+      "https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=mui&logoColor=white",
+    category: "Frontend",
+  },
+  {
+    name: "PWA",
+    badgeUrl:
+      "https://img.shields.io/badge/PWA-007ACC?style=for-the-badge&logo=progressive-web-apps&logoColor=white",
+    category: "Frontend",
+  },
+  {
+    name: "WebSocket",
+    badgeUrl:
+      "https://img.shields.io/badge/WebSocket-4B0082?style=for-the-badge&logo=websocket&logoColor=white",
+    category: "Frontend",
+  },
+  {
+    name: "AJAX",
+    badgeUrl:
+      "https://img.shields.io/badge/AJAX-007ACC?style=for-the-badge&logo=ajax&logoColor=white",
+    category: "Frontend",
+  },
+  {
+    name: "Axios",
+    badgeUrl:
+      "https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white",
+    category: "Frontend",
+  },
+  {
+    name: "React Router",
+    badgeUrl:
+      "https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white",
+    category: "Frontend",
+  },
+  {
+    name: "React I18n",
+    badgeUrl:
+      "https://img.shields.io/badge/React_I18n-61DAFB?style=for-the-badge&logo=react&logoColor=black",
+    category: "Frontend",
+  },
   // Backend
   {
     name: "Laravel",
@@ -75,7 +116,12 @@ export const skills: Skill[] = [
       "https://img.shields.io/badge/JSON_Server-2B7BB9?style=for-the-badge&logo=json&logoColor=white",
     category: "Backend",
   },
-
+  {
+    name: "Swagger",
+    badgeUrl:
+      "https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black",
+    category: "Backend",
+  },
   // Cloud
   {
     name: "AWS",
@@ -95,6 +141,25 @@ export const skills: Skill[] = [
     badgeUrl:
       "https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white",
     category: "Database",
+  },
+  {
+    name: "SQLite",
+    badgeUrl:
+      "https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white",
+    category: "Database",
+  },
+  // OS
+  {
+    name: "Windows",
+    badgeUrl:
+      "https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white",
+    category: "OS",
+  },
+  {
+    name: "Linux",
+    badgeUrl:
+      "https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black",
+    category: "OS",
   },
   // Mobile
   {
@@ -148,18 +213,23 @@ export const skills: Skill[] = [
     category: "Tools",
   },
   {
-    name: "Figma",
+    name: "VS Code",
     badgeUrl:
-      "https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white",
+      "https://img.shields.io/badge/Visual_Studio_Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white",
     category: "Tools",
   },
   {
-    name: "VS Code",
+    name: "WinSCP",
     badgeUrl:
-      "https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white",
+      "https://img.shields.io/badge/WinSCP-00A5E0?style=for-the-badge&logo=winscp&logoColor=white",
     category: "Tools",
   },
-
+  {
+    name: "PuTTY",
+    badgeUrl:
+      "https://img.shields.io/badge/PuTTY-00BFFF?style=for-the-badge&logo=putty&logoColor=white",
+    category: "Tools",
+  },
   // ETC (Design & Media)
   {
     name: "Photoshop",
@@ -173,12 +243,17 @@ export const skills: Skill[] = [
       "https://img.shields.io/badge/Adobe%20Premiere%20Pro-9999FF?style=for-the-badge&logo=Adobe%20Premiere%20Pro&logoColor=white",
     category: "ETC",
   },
-
+  {
+    name: "Figma",
+    badgeUrl:
+      "https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white",
+    category: "ETC",
+  },
   // CMS
   {
     name: "XE",
     badgeUrl:
-      "https://img.shields.io/badge/Zeroboard-00ADEF?style=for-the-badge&logo=undefined&logoColor=white",
+      "https://img.shields.io/badge/Zeroboard%20XE-00ADEF?style=for-the-badge&logoColor=white",
     category: "CMS",
   },
   {
