@@ -5,6 +5,26 @@ export interface Skill {
 }
 
 export const skills: Skill[] = [
+  // 言語
+  {
+    name: "Javascript",
+    badgeUrl:
+      "https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black",
+    category: "Language",
+  },
+  {
+    name: "Java",
+    badgeUrl:
+      "https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white",
+    category: "Language",
+  },
+  {
+    name: "PHP",
+    badgeUrl:
+      "https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white",
+    category: "Language",
+  },
+
   // Frontend
   {
     name: "React",
@@ -16,12 +36,6 @@ export const skills: Skill[] = [
     name: "Vue.js",
     badgeUrl:
       "https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D",
-    category: "Frontend",
-  },
-  {
-    name: "JavaScript",
-    badgeUrl:
-      "https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black",
     category: "Frontend",
   },
   {

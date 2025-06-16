@@ -1,6 +1,6 @@
 "use client";
 
-import type React from "react";
+import React from "react";
 import { useEffect, useRef, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -18,11 +18,16 @@ import {
   Zap,
   X,
   ZoomIn,
+  Users,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { getProjectById } from "../../../lib/projects";
+import {
+  getProjectById,
+  getProjectTypes,
+  hasProjectType,
+} from "../../../lib/projects";
 import { motion, useInView } from "framer-motion";
 import {
   fadeInUp,
@@ -38,6 +43,7 @@ import {
   getProjectTypeName,
 } from "../../../lib/project-utils";
 import { scrollToTop } from "../../../lib/scroll-utils";
+import { PDFViewer } from "@/components/pdf-viewer";
 
 function AnimatedSection({
   children,
@@ -94,8 +100,8 @@ export default function ProjectDetail() {
     );
   }
 
-  const isGameProject = project.type === "game";
-
+  const isGameProject = hasProjectType(project, "game");
+  const projectTypes = getProjectTypes(project);
   return (
     <div
       className={`min-h-screen ${
@@ -128,14 +134,19 @@ export default function ProjectDetail() {
             </Button>
           </motion.div>
           <div className="flex items-center space-x-3">
-            <Badge
-              className={`${getProjectTypeColor(
-                project.type
-              )} flex items-center gap-1`}
-            >
-              {getProjectTypeIcon(project.type)}
-              {getProjectTypeName(project.type)}
-            </Badge>
+            <div className="flex gap-1">
+              {projectTypes.map((type, index) => (
+                <Badge
+                  key={index}
+                  className={`${getProjectTypeColor(
+                    type
+                  )} flex items-center gap-1`}
+                >
+                  {getProjectTypeIcon(type)}
+                  {getProjectTypeName(type)}
+                </Badge>
+              ))}
+            </div>
             <span className="font-bold text-sm sm:text-base truncate">
               {project.title}
             </span>
@@ -171,6 +182,15 @@ export default function ProjectDetail() {
                 )}
               </div>
 
+              <div className="flex flex-wrap gap-2 mb-4">
+                {projectTypes.map((type, index) => (
+                  <Badge key={index} variant="outline" className="text-xs">
+                    {getProjectTypeIcon(type)}
+                    <span className="ml-1">{getProjectTypeName(type)}</span>
+                  </Badge>
+                ))}
+              </div>
+
               {isGameProject && project.gameGenre && (
                 <div className="flex items-center gap-2 mb-4">
                   <Trophy className="h-4 w-4 text-yellow-600" />
@@ -189,6 +209,13 @@ export default function ProjectDetail() {
                   <Calendar className="h-4 w-4 mr-2" />
                   {project.period}
                 </div>
+                {project.teamSize ? (
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <Users className="h-4 w-4 mr-2" />
+                    チーム規模: {project.teamSize}名
+                  </div>
+                ) : null}
+
                 <div className="flex flex-col sm:flex-row gap-2">
                   {project.demo && (
                     <motion.div {...scaleOnHover}>
@@ -211,7 +238,11 @@ export default function ProjectDetail() {
                             <ExternalLink className="h-4 w-4" />
                           )}
                           <span>
-                            {isGameProject ? "ゲームプレイ" : "ライブデモ"}
+                            {project.type === "app"
+                              ? "プレイストア"
+                              : isGameProject
+                              ? "ゲームプレイ"
+                              : "ライブデモ"}
                           </span>
                         </Link>
                       </Button>
@@ -258,9 +289,9 @@ export default function ProjectDetail() {
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInRight} className="lg:w-1/3">
+            <motion.div variants={fadeInRight} className="lg:w-1/3 h-full">
               <div
-                className="aspect-video lg:aspect-square relative group cursor-pointer"
+                className="aspect-video lg:aspect-square relative group cursor-pointer h-full"
                 onClick={() =>
                   setSelectedImage(project.image || "/placeholder.svg")
                 }
@@ -355,48 +386,51 @@ export default function ProjectDetail() {
         )}
 
         {/* Project Images Gallery */}
-        <AnimatedSection className="mb-8 md:mb-12">
-          <h2 className="text-xl md:text-2xl font-bold mb-6">
-            {isGameProject
-              ? "ゲームスクリーンショット"
-              : "プロジェクトスクリーンショット"}
-          </h2>
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
-          >
-            {project.images.map((image, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                {...cardHover}
-                className="aspect-video relative group cursor-pointer"
-                onClick={() => setSelectedImage(image || "/placeholder.svg")}
-              >
-                <Image
-                  src={image || "/placeholder.svg"}
-                  alt={`${project.title} スクリーンショット ${index + 1}`}
-                  fill
-                  className={`rounded-lg object-cover transition-transform group-hover:scale-105 ${
-                    isGameProject
-                      ? "ring-1 ring-purple-200 dark:ring-purple-800"
-                      : ""
-                  }`}
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors rounded-lg flex items-center justify-center">
-                  <ZoomIn className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                {isGameProject && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-purple-900/10 to-transparent rounded-lg" />
-                )}
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatedSection>
+        {project.images && (
+          <AnimatedSection className="mb-8 md:mb-12">
+            <h2 className="text-xl md:text-2xl font-bold mb-6">
+              {isGameProject
+                ? "ゲームスクリーンショット"
+                : "プロジェクトスクリーンショット"}
+            </h2>
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
+            >
+              {project.images.map((image, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                  {...cardHover}
+                  className="aspect-video relative group cursor-pointer"
+                  onClick={() => setSelectedImage(image || "/placeholder.svg")}
+                >
+                  <Image
+                    src={image || "/placeholder.svg"}
+                    alt={`${project.title} スクリーンショット ${index + 1}`}
+                    fill
+                    className={`border-2 rounded-lg object-cover transition-transform group-hover:scale-105 ${
+                      isGameProject
+                        ? "ring-1 ring-purple-200 dark:ring-purple-800"
+                        : ""
+                    }`}
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors rounded-lg flex items-center justify-center">
+                    <ZoomIn className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  {isGameProject && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-purple-900/10 to-transparent rounded-lg" />
+                  )}
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatedSection>
+        )}
 
+        {project.pdf && <PDFViewer file={project.pdf} title={project.title} />}
         {/* Project Details */}
         <motion.div
           initial="initial"
@@ -414,12 +448,17 @@ export default function ProjectDetail() {
             >
               <CardHeader>
                 <CardTitle className="text-lg md:text-xl">
-                  プロジェクト紹介
+                  {isGameProject ? "ゲーム紹介" : "プロジェクト紹介"}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-                  {project.longDescription}
+                <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+                  {project.longDescription.split("\n").map((line, index) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
                 </p>
               </CardContent>
             </Card>
@@ -459,7 +498,7 @@ export default function ProjectDetail() {
                       >
                         •
                       </span>
-                      <span className="text-muted-foreground text-sm md:text-base">
+                      <span className="text-gray-600 text-sm md:text-base">
                         {feature}
                       </span>
                     </motion.li>
@@ -470,70 +509,80 @@ export default function ProjectDetail() {
           </motion.div>
 
           {/* Challenges */}
-          <motion.div variants={fadeInUp} {...cardHover}>
-            <Card
-              className={`h-full ${
-                isGameProject ? "border-orange-200 dark:border-orange-800" : ""
-              }`}
-            >
-              <CardHeader>
-                <CardTitle className="text-lg md:text-xl">技術的挑戦</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {project.challenges.map((challenge, index) => (
-                    <motion.li
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex items-start space-x-3"
-                    >
-                      <span className="text-orange-500 mt-1 flex-shrink-0">
-                        •
-                      </span>
-                      <span className="text-muted-foreground text-sm md:text-base">
-                        {challenge}
-                      </span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          </motion.div>
+          {project.challenges && (
+            <motion.div variants={fadeInUp} {...cardHover}>
+              <Card
+                className={`h-full ${
+                  isGameProject
+                    ? "border-orange-200 dark:border-orange-800"
+                    : ""
+                }`}
+              >
+                <CardHeader>
+                  <CardTitle className="text-lg md:text-xl">
+                    技術的挑戦
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {project.challenges.map((challenge, index) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-start space-x-3"
+                      >
+                        <span className="text-orange-500 mt-1 flex-shrink-0">
+                          •
+                        </span>
+                        <span className="text-gray-600 text-sm md:text-base">
+                          {challenge}
+                        </span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
 
           {/* Learnings */}
-          <motion.div variants={fadeInUp} {...cardHover}>
-            <Card
-              className={`h-full ${
-                isGameProject ? "border-green-200 dark:border-green-800" : ""
-              }`}
-            >
-              <CardHeader>
-                <CardTitle className="text-lg md:text-xl">学んだこと</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {project.learnings.map((learning, index) => (
-                    <motion.li
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex items-start space-x-3"
-                    >
-                      <span className="text-green-500 mt-1 flex-shrink-0">
-                        •
-                      </span>
-                      <span className="text-muted-foreground text-sm md:text-base">
-                        {learning}
-                      </span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          </motion.div>
+          {project.learnings && (
+            <motion.div variants={fadeInUp} {...cardHover}>
+              <Card
+                className={`h-full ${
+                  isGameProject ? "border-green-200 dark:border-green-800" : ""
+                }`}
+              >
+                <CardHeader>
+                  <CardTitle className="text-lg md:text-xl">
+                    学んだこと
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {project.learnings.map((learning, index) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-start space-x-3"
+                      >
+                        <span className="font-bold text-green-500 mt-1 flex-shrink-0">
+                          •
+                        </span>
+                        <span className="text-gray-600  text-sm md:text-base">
+                          {learning}
+                        </span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
         </motion.div>
 
         {/* Back to Portfolio */}
