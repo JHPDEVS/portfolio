@@ -14,6 +14,7 @@ import {
   Coffee,
   Camera,
   Music,
+  Languages,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -60,24 +61,24 @@ export default function Portfolio() {
   // 趣味データ
   const hobbies = [
     {
-      name: "写真撮影",
-      icon: <Camera className="h-5 w-5" />,
-      description: "風景や日常を撮るのが好きです",
+      name: "囲碁",
+      icon: "🎯",
+      description: "戦略的思考を楽しむ伝統ゲーム",
     },
     {
-      name: "音楽鑑賞",
-      icon: <Music className="h-5 w-5" />,
-      description: "様々なジャンルの音楽を楽しんでいます",
+      name: "登山",
+      icon: "🏔️",
+      description: "自然の中でリフレッシュしています",
     },
     {
-      name: "カフェ巡り",
-      icon: <Coffee className="h-5 w-5" />,
-      description: "新しいカフェを探してコーヒーを飲みます",
+      name: "PC組み立て",
+      icon: "💻",
+      description: "最新パーツでカスタムPCを構築",
     },
     {
-      name: "読書",
-      icon: <Heart className="h-5 w-5" />,
-      description: "技術書と小説を読むのが好きです",
+      name: "IT ニュース",
+      icon: "📰",
+      description: "最新技術トレンドをチェック",
     },
   ];
 
@@ -151,8 +152,8 @@ export default function Portfolio() {
               こんにちは、<span className="text-primary">パク・ジュヒョン</span>
               です
             </h1>
-            <p className="mx-auto max-w-[700px] text-muted-foreground text-base md:text-xl px-4">
-              ユーザーエクスペリエンスを重視するフルスタック開発者です。ゲームからWebアプリケーション、モバイルアプリまで様々なプロジェクトを開発し、新しい技術に挑戦しています。
+            <p className="mx-auto max-w-[700px] p-6 text-muted-foreground text-base md:text-xl px-4">
+              ユーザーエクスペリエンスを重視するフロントエンド開発者です。ゲームからWebアプリケーション、モバイルアプリまで様々なプロジェクトを開発し、新しい技術に挑戦しています。
             </p>
           </motion.div>
           <motion.div
@@ -194,7 +195,7 @@ export default function Portfolio() {
               variants={fadeInLeft}
             >
               <Image
-                src="/placeholder.svg?height=400&width=400"
+                src="https://avatars.githubusercontent.com/u/30117732?v=4?height=300&width=300"
                 alt="プロフィール写真"
                 width={400}
                 height={400}
@@ -211,21 +212,22 @@ export default function Portfolio() {
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold">開発者として</h3>
                 <p className="text-muted-foreground text-base leading-relaxed">
-                  3年目のフルスタック開発者として、ゲーム開発からWebアプリケーション、モバイルアプリまで様々な分野で経験を積んできました。ユーザー中心の開発を目指し、新しい技術を素早く習得し適用することを得意としています。
-                </p>
-                <p className="text-muted-foreground text-base leading-relaxed">
-                  フロントエンドとバックエンドの両方に興味があり、特にインタラクティブなユーザーエクスペリエンスを作ることに情熱を持っています。ゲーム開発で得たパフォーマンス最適化の経験をWeb開発にも活用しています。
+                  ユーザーエクスペリエンスを重視するフロントエンド開発者です。ゲームからWebアプリケーション、モバイルアプリまで、さまざまなプロジェクトを手掛け、新しい技術に挑戦しています。直感的に操作できるインターフェースを提供することに情熱を注ぎ、デザインと機能性の両立を常に目指しています。また、フロントエンドだけでなく、クライアントプロジェクトにおいてバックエンドの経験も積みながら、将来的にはフルスタック開発者として成長していくことを目指しています。
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 text-sm text-muted-foreground">
                 <div className="flex items-center space-x-2">
                   <MapPin className="h-4 w-4" />
-                  <span>東京、日本</span>
+                  <span>東京、日本 (韓国出身)</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Calendar className="h-4 w-4" />
-                  <span>経験3年</span>
+                  <span>2023.04 ~ </span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Languages className="h-4 w-4" />
+                  <span>日本語能力試験 N2</span>
                 </div>
               </div>
 

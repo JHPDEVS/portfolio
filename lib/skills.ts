@@ -61,9 +61,21 @@ export const skills: Skill[] = [
     category: "Frontend",
   },
   {
+    name: "Redux Thunk",
+    badgeUrl:
+      "https://img.shields.io/badge/Redux_Thunk-007ACC?style=for-the-badge&logo=redux&logoColor=white",
+    category: "Frontend",
+  },
+  {
     name: "MUI",
     badgeUrl:
       "https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=mui&logoColor=white",
+    category: "Frontend",
+  },
+  {
+    name: "DaisyUI",
+    badgeUrl:
+      "https://img.shields.io/badge/DaisyUI-0E6B3D?style=for-the-badge&logo=tailwindcss&logoColor=white",
     category: "Frontend",
   },
   {
@@ -192,6 +204,12 @@ export const skills: Skill[] = [
     name: "Redmine",
     badgeUrl:
       "https://img.shields.io/badge/Redmine-9B1B30?style=for-the-badge&logo=redmine&logoColor=white",
+    category: "Tools",
+  },
+  {
+    name: "Postman",
+    badgeUrl:
+      "https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white",
     category: "Tools",
   },
   {
